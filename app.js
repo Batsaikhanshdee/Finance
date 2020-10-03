@@ -22,8 +22,44 @@ var uiController = (function(){
 
 })();
 // Санхүүтэй ажиллах контроллер
+// private
 var financeController = (function(){
-
+    var Income = function(id, description, value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+    var Exponse = function(id, description, value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+    var data = {
+        items : {
+            inc: [],
+            exp: []
+        },
+        totals: {
+            inc: 0,
+            exp: 0
+        }
+    }; 
+    return {
+        addItem: function(type, desc, val){
+            var item, id ;
+            // identification
+            if(data.items[type].length === 0) id = 1;
+            else{
+                data.itemsp[type][data.items[type].length-1];
+            }
+            if(type === 'inc'){
+                item = new Income(id, desc, val);
+            }else{
+                item = new Expense(id, desc, val);    
+            }
+            data.items[type].push(item);
+        }
+    }
 
 })();
 
@@ -31,8 +67,10 @@ var financeController = (function(){
 var appController = (function(uiController, financeController){
     var ctrlAddItem = function(){
             // 1. Оруулах өгөгдлийг дэлгэцээс олж авна.
-            console.log(uiController.getInput());
+            var input = uiController.getInput();
+            console.log(input);
             // 2. Олж авсан өгөгдлүүдээ санхүүгийн контроллорт дамжуулж тэнд хадгална.
+            financeController.addItem(input.type, input.description, input.value);
     
             // 3. Олж авсан өгөгдлүүдээ вэб дээрээ тохирох хэсэгт нь гаргана.
     
