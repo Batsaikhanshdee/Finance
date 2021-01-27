@@ -57,6 +57,13 @@ var uiController = (function() {
     
       document.querySelector(DOMstrings.dateLabel).textContent = unuudur.getFullYear() + " оны " + unuudur.getMonth()+1 + " сарын ";
     },
+    changeType: function(){
+      var fields = document.querySelectorAll(DOMstrings.inputType + ',' + DOMstrings.inputDescription + ',' + DOMstrings.inputValue);
+      nodeListForeach(fields, function(el){
+        el.classList.toggle('red-focus');
+      });
+      document.querySelector(DOMstrings.addBtn).classList.toggle("red");
+    },
     getInput: function() {
       return {
         type: document.querySelector(DOMstrings.inputType).value, // exp, inc
@@ -70,7 +77,7 @@ var uiController = (function() {
       // Элемент бүрийн хувьд зарлагийн хувийг массиваас шивж оруулах
       nodeListForeach(elements, function(el, index){
         el.textContent = allPercentages[index];
-      });
+      }); 
     },
 
     getDOMstrings: function() {
@@ -299,6 +306,7 @@ var appController = (function(uiController, financeController) {
         ctrlAddItem();
       }
     });
+    document.querySelector(DOM.inputType).addEventListener('change', uiController.changeType);
     document.querySelector(DOM.containerDiv).addEventListener('click', function(event){
       var id = event.target.parentNode.parentNode.parentNode.parentNode.id;
       if(id){
